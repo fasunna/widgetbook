@@ -6,13 +6,14 @@ repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbo
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, tool, cli]
+publish_to: none
 
 screenshots:
   - description: Widgetbook Logo
     path: assets/logo.webp
 
 environment:
-  sdk: ">=3.11.0 <4.0.0"
+  sdk: ">=3.10.4 <4.0.0"
 
 dependencies:
   analyzer: ^13.0.0

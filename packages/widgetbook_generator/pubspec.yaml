@@ -6,6 +6,7 @@ repository: https://github.com/widgetbook/widgetbook/tree/main/packages/widgetbo
 issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, codegen, build-runner]
+publish_to: none
 
 screenshots:
   - description: Widgetbook Logo
@@ -24,7 +25,8 @@ dependencies:
   meta: ^1.7.0
   path: ^1.8.0
   source_gen: ^4.0.0
-  widgetbook_annotation: ^3.11.0
+  widgetbook_annotation:
+    path: ../widgetbook_annotation
 
 dev_dependencies:
   dart_style: ^3.0.0

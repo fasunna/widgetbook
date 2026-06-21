@@ -4,13 +4,14 @@ publish_to: none
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.0
-  flutter: ^3.41.0
+  sdk: ^3.10.4
+  flutter: ^3.38.0
 
 dependencies:
   flutter:
     sdk: flutter
-  widgetbook: ^3.24.0
+  widgetbook:
+    path: ../../packages/widgetbook
 
 flutter:
   uses-material-design: true
