@@ -3,7 +3,6 @@
 ## package but not checked in the source control
 ## Removed when .gitignore is copied into .pubignore
 *.freezed.dart
-*.g.dart
 *.book.dart
 goldens/
 
