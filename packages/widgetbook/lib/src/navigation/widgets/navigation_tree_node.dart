@@ -59,7 +59,9 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
           isSelected: targetNode.path == widget.selectedNode?.path,
           enableLeafComponents: widget.enableLeafComponents,
           onTap: () {
-            setState(() => isExpanded = !isExpanded);
+            if (targetNode.path == widget.selectedNode?.path) {
+              setState(() => isExpanded = !isExpanded);
+            }
             widget.onNodeSelected?.call(targetNode);
           },
         ),

@@ -100,12 +100,20 @@ class _NavigationPanelState extends State<NavigationPanel> {
                     node: filteredRoot.children![index],
                     selectedNode: selectedNode,
                     onNodeSelected: (node) {
-                      if (!node.isLeaf || node.path == selectedNode?.path) {
+                      // Handle folder selection: render all use cases in the folder
+                      if (!node.isLeaf) {
+                        WidgetbookState.of(context).setFolderViewMode(node);
+                        setState(() => selectedNode = node);
+                        return;
+                      }
+
+                      // Handle use case selection: render the single use case
+                      if (node.path == selectedNode?.path) {
                         return;
                       }
 
                       setState(() => selectedNode = node);
-                      widget.onNodeSelected?.call(node);
+                      WidgetbookState.of(context).updatePath(node.path);
                     },
                     enableLeafComponents: WidgetbookState.of(
                       context,

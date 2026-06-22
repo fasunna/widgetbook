@@ -120,6 +120,17 @@ class WidgetbookState extends ChangeNotifier {
   /// NOTE: this forces the desktop mode, even if the screen size is small.
   Set<LayoutPanel>? panels;
 
+  /// Whether the Widgetbook is currently in folder view mode.
+  ///
+  /// When true, all use cases within [currentFolder] are displayed.
+  /// When false, a single use case at [path] is displayed.
+  bool _folderViewMode = false;
+
+  /// The current folder node when in folder view mode.
+  ///
+  /// This stores the folder whose use cases are being displayed.
+  WidgetbookNode? _currentFolder;
+
   /// The registry for knobs, which are interactive controls for use cases.
   late final KnobsRegistry knobs;
 
@@ -155,8 +166,26 @@ class WidgetbookState extends ChangeNotifier {
   List<WidgetbookNode> get directories => root.children!;
 
   /// Returns the current [WidgetbookUseCase] based on the [path].
-  /// If the [path] is not found, it returns `null`.
-  WidgetbookUseCase? get useCase => path == null ? null : root.table[path!];
+  /// If the [path] is not found or in folder view mode, it returns `null`.
+  WidgetbookUseCase? get useCase =>
+      _folderViewMode ? null : (path == null ? null : root.table[path!]);
+
+  /// Returns whether the Widgetbook is in folder view mode.
+  bool get isInFolderViewMode => _folderViewMode;
+
+  /// Returns the current folder node when in folder view mode.
+  WidgetbookNode? get currentFolder => _currentFolder;
+
+  /// Returns all use cases in the current folder (recursively).
+  ///
+  /// This collects all leaf [WidgetbookUseCase] nodes from the current folder
+  /// and its descendants. Returns an empty list if not in folder view mode.
+  List<WidgetbookUseCase> get folderUseCases {
+    if (!_folderViewMode || _currentFolder == null) {
+      return [];
+    }
+    return _currentFolder!.leaves.whereType<WidgetbookUseCase>().toList();
+  }
 
   /// Same as [addons] but without the ones that have no fields.
   @internal
@@ -270,6 +299,34 @@ class WidgetbookState extends ChangeNotifier {
     // Reset Knobs
     knobs.clear();
     queryParams.remove('knobs');
+
+    // Exit folder view mode when setting a specific path
+    _folderViewMode = false;
+    _currentFolder = null;
+
+    notifyListeners();
+  }
+
+  /// Enter folder view mode to display all use cases in a folder.
+  ///
+  /// When [folder] is selected, all use cases within it (and its descendants)
+  /// will be displayed in the workbench using the responsive layout.
+  ///
+  /// Pass [folder] as null to exit folder view mode.
+  @internal
+  void setFolderViewMode(WidgetbookNode? folder) {
+    if (folder == null) {
+      _folderViewMode = false;
+      _currentFolder = null;
+    } else {
+      _folderViewMode = true;
+      _currentFolder = folder;
+      path = folder.name;
+
+      // Reset Knobs when changing folder view
+      knobs.clear();
+      queryParams.remove('knobs');
+    }
 
     notifyListeners();
   }

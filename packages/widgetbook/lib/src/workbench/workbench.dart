@@ -5,6 +5,7 @@ import '../addons/addons.dart' hide WidgetbookTheme;
 import '../fields/fields.dart';
 import '../state/state.dart';
 import '../widgetbook_theme.dart';
+import 'folder_view_builder.dart';
 import 'safe_boundaries.dart';
 import 'use_case_builder.dart';
 
@@ -18,6 +19,13 @@ class Workbench extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = WidgetbookState.of(context);
+
+    // If in folder view mode, render all use cases in the folder
+    if (state.isInFolderViewMode) {
+      return const FolderViewBuilder();
+    }
+
+    // Otherwise, render the single selected use case
     final useCase = state.useCase;
 
     if (useCase == null) {
