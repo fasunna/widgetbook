@@ -9,6 +9,7 @@ issue_tracker: https://github.com/widgetbook/widgetbook/issues
 documentation: https://docs.widgetbook.io
 topics: [widgetbook, storybook, ui, tool, test]
 publish_to: none
+resolution: workspace
 
 screenshots:
   - description: Widgetbook Logo

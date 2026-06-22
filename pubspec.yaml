@@ -1,4 +1,17 @@
-name: widgetbook_workspace
+name: widgetbook_project
+publish_to: none
+version: 1.0.0
+
+workspace:
+  - packages/widgetbook
+  - packages/widgetbook_annotation
+  - packages/widgetbook_generator
+
+dependencies:
+  widgetbook:
+    path: packages/widgetbook
+  widgetbook_annotation:
+    path: packages/widgetbook_annotation
 
 environment:
   sdk: ^3.10.4
